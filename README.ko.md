@@ -2,35 +2,35 @@
 
 Hermes + Paperclip으로 자연어만으로 AI 회사를 생성·구성·배포·운영할 수 있게 해주는 공개용 오픈소스 툴킷입니다.
 
+## 3분 초보자 경로
+
+1. 저장소 클론
+2. 원클릭 설치 실행
+   - `./scripts/one_click_install.sh --enable-autostart`
+3. 자연어로 첫 회사 dry-run 생성
+   - `PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-from-prompt "공개용 AI 콘텐츠 회사 만들어줘" --dry-run`
+4. 승인 후 실제 생성
+5. 대시보드 열기
+   - `http://127.0.0.1:3100`
+
+## 초보자용 스크립트
+
+- `scripts/one_click_install.sh`
+- `scripts/enable_autostart.sh`
+- `scripts/status.sh`
+
 ## 이번 버전에서 되는 것
 
 - 공개용 범용 회사 템플릿
 - 자연어 요청 해석 CLI
-- 회사 생성 계획 작성 CLI
 - 실제 Paperclip 회사 + 에이전트 + starter issue 생성 흐름
+- 초보자용 온보딩 문서와 원클릭 스크립트
 - Hermes 자연어 오케스트레이션용 스킬 초안
 - Docker Compose 배포 스타터
 
-## 빠른 시작
+## Quickstart
 
-1. 저장소 클론
-2. `.env.example`를 `.env`로 복사
-3. 의존성 설치
-   - `python3 -m pip install -r requirements.txt`
-4. Paperclip 실행
-   - `npx paperclipai run`
-5. 설정 검증
-   - `PYTHONPATH=src python3 -m paperclip_company_factory.cli validate-env`
-6. 자연어 요청 해석
-   - `PYTHONPATH=src python3 -m paperclip_company_factory.cli interpret-request "공개용 AI 콘텐츠 회사 만들어줘"`
-7. 회사 생성 계획 작성
-   - `PYTHONPATH=src python3 -m paperclip_company_factory.cli plan-company "Acme Research" --template research-company`
-8. 전체 생성 dry-run
-   - `PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-company "Acme Research" --template research-company --dry-run`
-9. 자연어에서 바로 생성 흐름 만들기
-   - `PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-from-prompt "공개용 AI 콘텐츠 회사 만들어줘" --dry-run`
-10. 실제 생성 실행
-   - `PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-company "Acme Research" --template research-company`
+자세한 흐름은 `docs/quickstart.ko.md` 참고.
 
 ## Hermes 연동 개념
 
