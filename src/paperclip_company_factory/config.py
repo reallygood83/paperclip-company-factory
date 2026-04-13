@@ -17,6 +17,8 @@ class FactoryConfig:
     default_deploy_target: str = os.getenv("DEFAULT_DEPLOY_TARGET", "local")
     default_visibility: str = os.getenv("DEFAULT_VISIBILITY", "private")
     default_provider_profile: str = os.getenv("DEFAULT_PROVIDER_PROFILE", "openai-codex")
+    default_agent_adapter_type: str = os.getenv("DEFAULT_AGENT_ADAPTER_TYPE", "hermes_local")
+    default_agent_model: str = os.getenv("DEFAULT_AGENT_MODEL", "gpt-5.4")
 
     def missing_required(self) -> list[str]:
         missing: list[str] = []
