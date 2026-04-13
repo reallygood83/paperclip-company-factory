@@ -1,0 +1,28 @@
+template_id: research-company
+display_name: Research Company
+mission_template: "{company_name} delivers AI-native market intelligence and decision support."
+agent_roles:
+  - role: ceo
+    title: CEO
+    objective: Set direction, prioritize bets, approve launch tasks.
+  - role: researcher
+    title: Researcher
+    objective: Gather raw signals, evidence, and source material.
+  - role: analyst
+    title: Analyst
+    objective: Convert research into decisions, memos, and scorecards.
+  - role: publisher
+    title: Publisher
+    objective: Publish outputs, briefings, and external summaries.
+starter_issues:
+  - title: Define ICP and first 3 deliverables
+    priority: high
+  - title: Create weekly research cadence
+    priority: medium
+  - title: Publish launch briefing
+    priority: medium
+launch_checklist:
+  - Confirm provider credentials
+  - Confirm dashboard health
+  - Create 10 initial issues
+  - Define first outbound content asset

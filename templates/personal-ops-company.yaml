@@ -1,0 +1,27 @@
+template_id: personal-ops-company
+display_name: Personal Ops Company
+mission_template: "{company_name} acts as a personal AI operating company for knowledge, planning, and execution."
+agent_roles:
+  - role: ceo
+    title: CEO
+    objective: Set personal priorities and constraints.
+  - role: hermes-operator
+    title: Hermes Operator
+    objective: Turn natural language into workflows and logs.
+  - role: scheduler
+    title: Scheduler
+    objective: Manage routines, reminders, and recurring tasks.
+  - role: knowledge-manager
+    title: Knowledge Manager
+    objective: Store, retrieve, and structure knowledge assets.
+starter_issues:
+  - title: Define weekly operating rhythm
+    priority: high
+  - title: Create memory and notes workflow
+    priority: medium
+  - title: Set top 3 automations
+    priority: medium
+launch_checklist:
+  - Inbox workflow configured
+  - Reminder cadence configured
+  - Reporting views validated

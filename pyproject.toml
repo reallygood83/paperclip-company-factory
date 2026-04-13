@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paperclip-company-factory"
+version = "0.1.0"
+description = "Bootstrap AI-native companies from natural language with Hermes + Paperclip"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{name = "Moon Jeong / Hermes Agent"}]
+license = {text = "MIT"}
+dependencies = ["PyYAML>=6.0"]
+
+[project.scripts]
+pcf = "paperclip_company_factory.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

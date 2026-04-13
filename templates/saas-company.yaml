@@ -1,0 +1,27 @@
+template_id: saas-company
+display_name: SaaS Company
+mission_template: "{company_name} ships and operates an AI-native software product."
+agent_roles:
+  - role: ceo
+    title: CEO
+    objective: Define strategy and milestones.
+  - role: pm
+    title: Product Manager
+    objective: Own roadmap, specs, and prioritization.
+  - role: engineer
+    title: Engineer
+    objective: Build, integrate, and maintain the product.
+  - role: support
+    title: Support
+    objective: Handle feedback, incidents, and docs.
+starter_issues:
+  - title: Define MVP scope
+    priority: high
+  - title: Create onboarding checklist
+    priority: medium
+  - title: Create bug triage workflow
+    priority: medium
+launch_checklist:
+  - MVP spec locked
+  - Demo path validated
+  - Support loop defined

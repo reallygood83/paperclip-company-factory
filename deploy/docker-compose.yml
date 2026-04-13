@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  paperclip:
+    image: ghcr.io/paperclipai/paperclip:latest
+    restart: unless-stopped
+    ports:
+      - "3100:3100"
+    environment:
+      PAPERCLIP_MODE: ${PAPERCLIP_MODE:-local_trusted}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    volumes:
+      - paperclip_data:/app/data
+
+volumes:
+  paperclip_data:

@@ -1,0 +1,27 @@
+template_id: content-studio
+display_name: Content Studio
+mission_template: "{company_name} produces AI-assisted content, editorial workflows, and distribution assets."
+agent_roles:
+  - role: ceo
+    title: CEO
+    objective: Define narrative and publishing strategy.
+  - role: writer
+    title: Writer
+    objective: Draft long-form content and scripts.
+  - role: editor
+    title: Editor
+    objective: Improve clarity, style, and quality gates.
+  - role: distributor
+    title: Distributor
+    objective: Publish content across channels and track performance.
+starter_issues:
+  - title: Define 5 launch content themes
+    priority: high
+  - title: Draft landing page copy
+    priority: medium
+  - title: Set weekly editorial workflow
+    priority: medium
+launch_checklist:
+  - Define brand voice
+  - Prepare 3 seed posts
+  - Set analytics and feedback loop

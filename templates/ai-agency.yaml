@@ -1,0 +1,27 @@
+template_id: ai-agency
+display_name: AI Agency
+mission_template: "{company_name} sells AI automation services and repeatable delivery systems."
+agent_roles:
+  - role: ceo
+    title: CEO
+    objective: Own positioning, offers, and pricing.
+  - role: strategist
+    title: Strategist
+    objective: Turn client goals into delivery plans.
+  - role: marketer
+    title: Marketer
+    objective: Generate inbound demand and outbound campaigns.
+  - role: operator
+    title: Operator
+    objective: Track delivery, handoffs, and issue queues.
+starter_issues:
+  - title: Define flagship offer
+    priority: high
+  - title: Create outreach sequence
+    priority: high
+  - title: Build delivery checklist
+    priority: medium
+launch_checklist:
+  - Finalize offer and pricing
+  - Create sales pipeline board
+  - Publish case-study placeholder
