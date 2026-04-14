@@ -4,7 +4,7 @@
 
 ```bash
 ./scripts/one_click_install.sh --enable-autostart
-PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-from-prompt "Create a public AI content studio company for newsletters" --dry-run
+python3 scripts/first_run_wizard.py
 ```
 
 ## Step-by-step
@@ -33,14 +33,20 @@ npx paperclipai run
 PYTHONPATH=src python3 -m paperclip_company_factory.cli interpret-request "Create a public AI content studio company for newsletters"
 ```
 
-### 5. Dry-run a full bootstrap from prompt
+### 5. Dry-run a full bootstrap from prompt with a readable report
 
 ```bash
-PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-from-prompt "Create a public AI content studio company for newsletters" --dry-run
+PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-from-prompt "Create a public AI content studio company for newsletters" --dry-run --format text
 ```
 
 ### 6. Execute the bootstrap
 
 ```bash
-PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-from-prompt "Create a public AI content studio company for newsletters"
+PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-from-prompt "Create a public AI content studio company for newsletters" --format text
+```
+
+### 7. Wizard mode
+
+```bash
+python3 scripts/first_run_wizard.py
 ```

@@ -4,7 +4,7 @@
 
 `./scripts/one_click_install.sh --enable-autostart`
 
-`PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-from-prompt "공개용 AI 콘텐츠 회사 만들어줘" --dry-run`
+`python3 scripts/first_run_wizard.py`
 
 ## 단계별 흐름
 
@@ -24,10 +24,14 @@
 
 `PYTHONPATH=src python3 -m paperclip_company_factory.cli interpret-request "공개용 AI 콘텐츠 회사 만들어줘"`
 
-### 5. 자연어에서 바로 전체 dry-run
+### 5. 자연어에서 바로 전체 dry-run + 읽기 쉬운 리포트
 
-`PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-from-prompt "공개용 AI 콘텐츠 회사 만들어줘" --dry-run`
+`PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-from-prompt "공개용 AI 콘텐츠 회사 만들어줘" --dry-run --format text`
 
 ### 6. 실제 생성 실행
 
-`PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-from-prompt "공개용 AI 콘텐츠 회사 만들어줘"`
+`PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-from-prompt "공개용 AI 콘텐츠 회사 만들어줘" --format text`
+
+### 7. Wizard 모드
+
+`python3 scripts/first_run_wizard.py`

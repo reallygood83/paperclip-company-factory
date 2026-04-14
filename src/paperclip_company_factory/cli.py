@@ -4,8 +4,16 @@ import argparse
 import json
 from .bridge import interpret_prompt
 from .config import FactoryConfig
+from .formatter import format_bootstrap_result
 from .planner import build_company_plan
 from .paperclip_api import healthcheck, create_company, bootstrap_company
+
+
+def _emit(data: dict, output_format: str = 'json') -> None:
+    if output_format == 'text':
+        print(format_bootstrap_result(data))
+    else:
+        print(json.dumps(data, indent=2, ensure_ascii=False))
 
 
 def _build_plan_from_args(args: argparse.Namespace, cfg: FactoryConfig):
@@ -47,7 +55,7 @@ def cmd_create(args: argparse.Namespace) -> int:
 def cmd_bootstrap(args: argparse.Namespace) -> int:
     cfg = FactoryConfig()
     plan = _build_plan_from_args(args, cfg)
-    print(json.dumps(bootstrap_company(cfg, plan, dry_run=args.dry_run), indent=2, ensure_ascii=False))
+    _emit(bootstrap_company(cfg, plan, dry_run=args.dry_run), args.format)
     return 0
 
 
@@ -71,7 +79,7 @@ def cmd_bootstrap_from_prompt(args: argparse.Namespace) -> int:
         'interpreted_request': inferred,
         'bootstrap': bootstrap_company(cfg, plan, dry_run=args.dry_run),
     }
-    print(json.dumps(payload, indent=2, ensure_ascii=False))
+    _emit(payload, args.format)
     return 0
 
 
@@ -107,6 +115,7 @@ def parser() -> argparse.ArgumentParser:
     bootstrap.add_argument('--deploy-target')
     bootstrap.add_argument('--provider-profile')
     bootstrap.add_argument('--dry-run', action='store_true')
+    bootstrap.add_argument('--format', choices=['json', 'text'], default='json')
 
     interpret = sub.add_parser('interpret-request')
     interpret.add_argument('prompt')
@@ -117,6 +126,7 @@ def parser() -> argparse.ArgumentParser:
     from_prompt.add_argument('--prefix')
     from_prompt.add_argument('--provider-profile')
     from_prompt.add_argument('--dry-run', action='store_true')
+    from_prompt.add_argument('--format', choices=['json', 'text'], default='json')
 
     return p
 

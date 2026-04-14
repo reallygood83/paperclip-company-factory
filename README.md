@@ -9,22 +9,25 @@ Launch AI-native companies from natural language using Hermes + Paperclip.
 1. Clone this repository
 2. Run one command:
    - `./scripts/one_click_install.sh --enable-autostart`
-3. Create the first company from natural language:
-   - `PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-from-prompt "Create a public AI content studio company for newsletters" --dry-run`
-4. Approve and run the real bootstrap
-5. Open the Paperclip dashboard at `http://127.0.0.1:3100`
+3. Open the interactive wizard:
+   - `python3 scripts/first_run_wizard.py`
+4. Review the dry-run report
+5. Approve the real bootstrap
+6. Open the Paperclip dashboard at `http://127.0.0.1:3100`
 
 ## Beginner-friendly scripts
 
 - `scripts/one_click_install.sh`
 - `scripts/enable_autostart.sh`
 - `scripts/status.sh`
+- `scripts/first_run_wizard.py`
 
 ## What this repo includes
 
 - Public-safe company templates
 - A Python CLI for planning, interpreting prompts, and bootstrapping companies
 - Real Paperclip bootstrap flow for company + agents + starter issues
+- Text report formatting for beginner-friendly results
 - Beginner-first onboarding docs and scripts
 - Hermes skill scaffolding for natural-language orchestration
 - Docker Compose deployment starter
@@ -39,8 +42,8 @@ See `docs/quickstart.md` for the step-by-step flow.
 - `pcf validate-env`
 - `pcf health`
 - `pcf interpret-request "Create a public AI content studio company for newsletters"`
-- `pcf bootstrap-company "Atlas Research" --template research-company --dry-run`
-- `pcf bootstrap-from-prompt "Create a public AI content studio company for newsletters" --dry-run`
+- `pcf bootstrap-company "Atlas Research" --template research-company --dry-run --format text`
+- `pcf bootstrap-from-prompt "Create a public AI content studio company for newsletters" --dry-run --format text`
 
 ## Implemented bootstrap flow
 
@@ -49,6 +52,7 @@ The CLI now supports a real Paperclip bootstrap sequence:
 1. create company
 2. create agents from the selected template
 3. create starter issues
+4. summarize the result in a human-friendly report
 
 By default, start with `--dry-run` first.
 
@@ -60,10 +64,10 @@ This repo provides the reusable factory layer between them.
 
 A practical Hermes flow looks like this:
 - user says: “리서치 회사 하나 만들어줘”
-- Hermes maps prompt → template, visibility, deploy target
-- Hermes runs `bootstrap-from-prompt --dry-run`
-- Hermes shows the plan and asks for approval for risky steps
-- Hermes runs the real bootstrap and reports URLs / IDs / starter issues
+- Hermes runs `bootstrap-from-prompt --dry-run --format text`
+- Hermes shows a readable report and asks for approval
+- Hermes runs the real bootstrap and reports company, agent, and issue IDs
+- Hermes can continue with commands like “이 회사에 marketer 추가해줘”
 
 ## Templates
 
