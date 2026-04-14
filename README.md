@@ -56,11 +56,40 @@ For first-time users, recovery should be obvious:
 ## Hermes integration concept
 
 A practical Hermes flow looks like this:
-- user says: “리서치 회사 하나 만들어줘”
+- user says: "리서치 회사 하나 만들어줘"
 - Hermes runs `bootstrap-from-prompt --dry-run --format text`
 - Hermes shows a readable report and asks for approval
 - Hermes runs the real bootstrap and reports company, agent, and issue IDs
-- Hermes can continue with commands like “이 회사에 marketer 추가해줘”
+- Hermes can continue with commands like "이 회사에 marketer 추가해줘"
+
+## Multi-company support
+
+Paperclip now supports multiple companies. Use these commands to manage them:
+
+```bash
+# List all companies
+PYTHONPATH=src python3 -m paperclip_company_factory.cli list-companies --format text
+
+# Get company by prefix
+PYTHONPATH=src python3 -m paperclip_company_factory.cli get-company HER --format text
+
+# Create company with specific prefix
+PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-company "Hermes Validation Lab 01" --prefix HVL1 --format text
+```
+
+## Example output
+
+```
+🏢 Hermes Validation Lab 01
+
+📋 Mission: Hermes Validation Lab 01 delivers AI-native market intelligence and decision support.
+📊 Template: research-company
+🔖 Prefix: HER
+👥 Agents: 4 (CEO, Researcher, Analyst, Publisher)
+📝 Issues: 3 starter tasks
+
+✅ Dry-run complete. Run without --dry-run to create real resources.
+```
 
 ## Docs
 

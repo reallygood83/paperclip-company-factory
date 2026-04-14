@@ -83,6 +83,38 @@ def cmd_bootstrap_from_prompt(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_list_companies(args: argparse.Namespace) -> int:
+    cfg = FactoryConfig()
+    from .paperclip_api import _request
+    endpoint = f"{cfg.paperclip_base_url}/api/companies"
+    companies = _request(endpoint, api_key=cfg.paperclip_api_key)
+    if args.format == 'text':
+        print("Companies:")
+        for c in companies:
+            print(f"  {c['issuePrefix']}: {c['name']}")
+    else:
+        print(json.dumps(companies, indent=2, ensure_ascii=False))
+    return 0
+
+
+def cmd_get_company(args: argparse.Namespace) -> int:
+    cfg = FactoryConfig()
+    from .paperclip_api import _request
+    endpoint = f"{cfg.paperclip_base_url}/api/companies"
+    companies = _request(endpoint, api_key=cfg.paperclip_api_key)
+    for c in companies:
+        if c['issuePrefix'].upper() == args.prefix.upper():
+            if args.format == 'text':
+                print(f"Company: {c['name']}")
+                print(f"Prefix: {c['issuePrefix']}")
+                print(f"ID: {c['id']}")
+            else:
+                print(json.dumps(c, indent=2, ensure_ascii=False))
+            return 0
+    print(f"Company with prefix '{args.prefix}' not found", file=sys.stderr)
+    return 1
+
+
 def parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog='pcf', description='Paperclip Company Factory CLI')
     sub = p.add_subparsers(dest='command', required=True)
@@ -128,6 +160,15 @@ def parser() -> argparse.ArgumentParser:
     from_prompt.add_argument('--dry-run', action='store_true')
     from_prompt.add_argument('--format', choices=['json', 'text'], default='json')
 
+    # List companies
+    list_companies = sub.add_parser('list-companies')
+    list_companies.add_argument('--format', choices=['json', 'text'], default='json')
+
+    # Get company by prefix
+    get_company = sub.add_parser('get-company')
+    get_company.add_argument('prefix')
+    get_company.add_argument('--format', choices=['json', 'text'], default='json')
+
     return p
 
 
@@ -148,6 +189,10 @@ def main() -> int:
         return cmd_interpret(args)
     if args.command == 'bootstrap-from-prompt':
         return cmd_bootstrap_from_prompt(args)
+    if args.command == 'list-companies':
+        return cmd_list_companies(args)
+    if args.command == 'get-company':
+        return cmd_get_company(args)
     p.error(f'unknown command: {args.command}')
     return 2
 
