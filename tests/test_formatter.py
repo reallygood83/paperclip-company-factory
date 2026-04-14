@@ -23,4 +23,5 @@ def test_format_bootstrap_result_dry_run_mentions_next_step():
     }
     text = format_bootstrap_result(payload)
     assert 'Paperclip Company Factory Report' in text
-    assert 'Next step: run the same command without --dry-run' in text
+    assert 'Next actions' in text
+    assert 'Ask Hermes:' in text

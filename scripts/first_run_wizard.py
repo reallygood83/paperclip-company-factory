@@ -30,6 +30,12 @@ def ask_yes_no(question: str, default: bool = True) -> bool:
     return value in {'y', 'yes'}
 
 
+def suggested_prompt(mode: str) -> str:
+    if mode == 'advanced':
+        return 'Create a public AI SaaS company for internal knowledge search deployed to docker compose'
+    return 'Create a public AI content studio company for newsletters'
+
+
 def main() -> int:
     cfg = FactoryConfig()
     print('Paperclip Company Factory Wizard')
@@ -42,8 +48,12 @@ def main() -> int:
 
     print('Paperclip is reachable.')
     print('===')
-    prompt = ask('What kind of company do you want to create?', 'Create a public AI content studio company for newsletters')
+    mode = ask('Choose mode: beginner or advanced', 'beginner').strip().lower()
+    prompt = ask('What kind of company do you want to create?', suggested_prompt(mode))
     inferred = interpret_prompt(prompt)
+    print(f"Suggested template: {inferred['template']}")
+    print(f"Suggested visibility: {inferred['visibility']}")
+    print(f"Suggested deploy target: {inferred['deploy_target']}")
     company_name = ask('Suggested company name', inferred['company_name'])
     provider_profile = ask('Provider profile', cfg.default_provider_profile)
     dry_run = ask_yes_no('Start with a dry-run?', True)
@@ -70,6 +80,11 @@ def main() -> int:
         }
         print()
         print(format_bootstrap_result(payload))
+    print()
+    print('Try next in Hermes:')
+    print('- 리서치 회사 하나 만들어줘')
+    print('- 이 회사에 marketer 추가해줘')
+    print('- 이 회사 런치 준비해줘')
     return 0
 
 

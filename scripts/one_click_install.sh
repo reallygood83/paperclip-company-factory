@@ -30,7 +30,9 @@ while [[ $# -gt 0 ]]; do
 done
 
 log() {
-  printf '\n== %s ==\n' "$1"
+  printf '
+== %s ==
+' "$1"
 }
 
 require_cmd() {
@@ -44,12 +46,17 @@ healthcheck() {
   curl -fsS http://127.0.0.1:3100/api/companies >/dev/null 2>&1
 }
 
+port_pid() {
+  lsof -t -iTCP:3100 -sTCP:LISTEN 2>/dev/null | head -n 1 || true
+}
+
 log "Checking prerequisites"
 require_cmd python3
 require_cmd node
 require_cmd npm
 require_cmd npx
 require_cmd curl
+require_cmd lsof
 
 log "Preparing .env"
 if [[ ! -f .env ]]; then
@@ -63,8 +70,13 @@ log "Installing Python dependencies"
 python3 -m pip install -q -r requirements.txt
 
 log "Checking Paperclip server"
+PID="$(port_pid)"
 if healthcheck; then
   echo "Paperclip is already running on http://127.0.0.1:3100"
+elif [[ -n "$PID" ]]; then
+  echo "Port 3100 is already in use by PID $PID, but Paperclip health check failed."
+  echo "Resolve the port conflict or stop the existing process, then rerun this installer."
+  exit 1
 else
   echo "Starting Paperclip in background..."
   nohup npx paperclipai run > "$ROOT_DIR/.paperclip-company-factory.paperclip.log" 2>&1 &
@@ -81,6 +93,7 @@ fi
 
 if ! healthcheck; then
   echo "Paperclip health check failed. Inspect logs at: $ROOT_DIR/.paperclip-company-factory.paperclip.log"
+  echo "Try: ./scripts/logs.sh"
   exit 1
 fi
 
@@ -96,7 +109,7 @@ fi
 
 if [[ -n "$BOOTSTRAP_PROMPT" ]]; then
   log "Bootstrapping from natural-language prompt"
-  CMD=(python3 -m paperclip_company_factory.cli bootstrap-from-prompt "$BOOTSTRAP_PROMPT")
+  CMD=(python3 -m paperclip_company_factory.cli bootstrap-from-prompt "$BOOTSTRAP_PROMPT" --format text)
   if [[ "$DRY_RUN" == "true" ]]; then
     CMD+=(--dry-run)
   fi
@@ -105,6 +118,9 @@ fi
 
 log "Done"
 echo "Dashboard: http://127.0.0.1:3100"
-echo "Status script: $ROOT_DIR/scripts/status.sh"
+echo "Status:    ./scripts/status.sh"
+echo "Restart:   ./scripts/restart.sh"
+echo "Logs:      ./scripts/logs.sh"
+echo "Wizard:    python3 scripts/first_run_wizard.py"
 echo "Next step example:"
-echo "  PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-from-prompt \"Create a public AI content studio company for newsletters\" --dry-run"
+echo "  PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-from-prompt "Create a public AI content studio company for newsletters" --dry-run --format text"

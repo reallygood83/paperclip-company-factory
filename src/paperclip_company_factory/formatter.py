@@ -40,6 +40,21 @@ def _issue_lines(issues: list[dict]) -> list[str]:
     return lines
 
 
+def _next_commands(company_name: str, template_id: str, dry_run: bool) -> list[str]:
+    if dry_run:
+        return [
+            f'PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-company "{company_name}" --template {template_id}',
+            'python3 scripts/first_run_wizard.py',
+            'Ask Hermes: "리서치 회사 하나 만들어줘"',
+        ]
+    return [
+        'Open dashboard: http://127.0.0.1:3100',
+        'Run: ./scripts/status.sh',
+        'Ask Hermes: "이 회사에 marketer 추가해줘"',
+        'Ask Hermes: "이 회사 런치 준비해줘"',
+    ]
+
+
 def format_bootstrap_result(payload: dict) -> str:
     plan = payload.get('plan') or payload.get('bootstrap', {}).get('plan', {})
     company = payload.get('company') or payload.get('bootstrap', {}).get('company', {})
@@ -57,9 +72,11 @@ def format_bootstrap_result(payload: dict) -> str:
         lines.append(f"Deploy target: {interpreted.get('deploy_target', '-')}")
         lines.append('===')
 
-    lines.append(f"Plan company: {plan.get('company_name', '-')}")
+    company_name = plan.get('company_name', '-')
+    template_id = plan.get('template_id', '-')
+    lines.append(f"Plan company: {company_name}")
     lines.append(f"Mission: {plan.get('mission', '-')}")
-    lines.append(f"Template id: {plan.get('template_id', '-')}")
+    lines.append(f"Template id: {template_id}")
     lines.append(f"Provider profile: {plan.get('provider_profile', '-')}")
     lines.append('===')
     lines.append(_company_line(company))
@@ -68,8 +85,7 @@ def format_bootstrap_result(payload: dict) -> str:
     if not company.get('dry_run') and company.get('id'):
         lines.append('Dashboard URL: http://127.0.0.1:3100')
     lines.append('===')
-    if company.get('dry_run'):
-        lines.append('Next step: run the same command without --dry-run to create the company for real.')
-    else:
-        lines.append('Next step: open the dashboard and continue with Hermes natural-language commands.')
+    lines.append('Next actions')
+    for command in _next_commands(company_name, template_id, company.get('dry_run', False)):
+        lines.append(f'- {command}')
     return '\n'.join(lines)

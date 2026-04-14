@@ -3,18 +3,25 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 SERVICE_NAME="paperclip-company-factory-paperclip"
+LOG_FILE="$ROOT_DIR/.paperclip-company-factory.paperclip.log"
 
 print_status() {
-  printf '%-24s %s\n' "$1" "$2"
+  printf '%-24s %s
+' "$1" "$2"
+}
+
+port_pid() {
+  lsof -t -iTCP:3100 -sTCP:LISTEN 2>/dev/null | head -n 1 || true
 }
 
 print_status "root" "$ROOT_DIR"
-
+PID="$(port_pid)"
 if curl -fsS http://127.0.0.1:3100/api/companies >/dev/null 2>&1; then
   print_status "paperclip_http" "up"
 else
   print_status "paperclip_http" "down"
 fi
+print_status "port_3100_pid" "${PID:-none}"
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
   if launchctl list | grep -q "$SERVICE_NAME"; then
@@ -30,5 +37,8 @@ elif [[ "$(uname -s)" == "Linux" ]]; then
   fi
 fi
 
-echo "dashboard               http://127.0.0.1:3100"
-echo "factory_health_command  PYTHONPATH=src python3 -m paperclip_company_factory.cli health"
+print_status "dashboard" "http://127.0.0.1:3100"
+print_status "background_log" "$LOG_FILE"
+print_status "factory_health" "PYTHONPATH=src python3 -m paperclip_company_factory.cli health"
+print_status "restart_command" "./scripts/restart.sh"
+print_status "logs_command" "./scripts/logs.sh"

@@ -20,22 +20,16 @@ Launch AI-native companies from natural language using Hermes + Paperclip.
 - `scripts/one_click_install.sh`
 - `scripts/enable_autostart.sh`
 - `scripts/status.sh`
+- `scripts/restart.sh`
+- `scripts/logs.sh`
 - `scripts/first_run_wizard.py`
 
-## What this repo includes
+## Recovery UX
 
-- Public-safe company templates
-- A Python CLI for planning, interpreting prompts, and bootstrapping companies
-- Real Paperclip bootstrap flow for company + agents + starter issues
-- Text report formatting for beginner-friendly results
-- Beginner-first onboarding docs and scripts
-- Hermes skill scaffolding for natural-language orchestration
-- Docker Compose deployment starter
-- Launch and troubleshooting docs
-
-## Quickstart
-
-See `docs/quickstart.md` for the step-by-step flow.
+For first-time users, recovery should be obvious:
+- check status: `./scripts/status.sh`
+- restart service: `./scripts/restart.sh`
+- inspect logs: `./scripts/logs.sh`
 
 ## Example commands
 
@@ -45,22 +39,7 @@ See `docs/quickstart.md` for the step-by-step flow.
 - `pcf bootstrap-company "Atlas Research" --template research-company --dry-run --format text`
 - `pcf bootstrap-from-prompt "Create a public AI content studio company for newsletters" --dry-run --format text`
 
-## Implemented bootstrap flow
-
-The CLI now supports a real Paperclip bootstrap sequence:
-
-1. create company
-2. create agents from the selected template
-3. create starter issues
-4. summarize the result in a human-friendly report
-
-By default, start with `--dry-run` first.
-
 ## Hermes integration concept
-
-Hermes acts as the natural-language orchestrator.
-Paperclip acts as the company runtime and issue/agent engine.
-This repo provides the reusable factory layer between them.
 
 A practical Hermes flow looks like this:
 - user says: “리서치 회사 하나 만들어줘”
@@ -68,14 +47,6 @@ A practical Hermes flow looks like this:
 - Hermes shows a readable report and asks for approval
 - Hermes runs the real bootstrap and reports company, agent, and issue IDs
 - Hermes can continue with commands like “이 회사에 marketer 추가해줘”
-
-## Templates
-
-- `research-company`
-- `content-studio`
-- `ai-agency`
-- `saas-company`
-- `personal-ops-company`
 
 ## Docs
 

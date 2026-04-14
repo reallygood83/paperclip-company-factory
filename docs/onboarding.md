@@ -9,17 +9,9 @@ A first-time user should be able to:
 3. keep it alive after reboot
 4. create a first company from natural language
 5. understand the result without reading raw JSON
+6. recover quickly if the server stops
 
 within a single onboarding flow.
-
-## Beginner-first UX principles
-
-- hide Paperclip internals at first
-- default to local + safe + self-hosted
-- show success as a living company, not as config files
-- use progressive disclosure for advanced settings
-- make recovery obvious: status, restart, logs
-- format results as human-readable reports by default in beginner paths
 
 ## Recommended first-run flow
 
@@ -29,8 +21,10 @@ within a single onboarding flow.
 4. Review the dry-run report
 5. Approve real creation
 6. Open the dashboard
-7. Continue from Hermes with a phrase like:
-   - `리서치 회사 하나 만들어줘`
+7. If something breaks, use:
+   - `./scripts/status.sh`
+   - `./scripts/restart.sh`
+   - `./scripts/logs.sh`
 
 ## Hermes-first onboarding
 
@@ -40,13 +34,4 @@ The best beginner experience after install is:
 - Hermes shows a short report
 - Hermes asks for approval
 - Hermes runs the real bootstrap
-
-## Success screen should show
-
-- dashboard URL
-- current status
-- autostart state
-- company created / planned
-- agents created / planned
-- starter issues created / planned
-- the next natural-language command to try
+- Hermes suggests the next 2-3 commands to try
