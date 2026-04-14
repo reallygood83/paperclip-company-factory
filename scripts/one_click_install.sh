@@ -47,7 +47,11 @@ healthcheck() {
 }
 
 port_pid() {
-  lsof -t -iTCP:3100 -sTCP:LISTEN 2>/dev/null | head -n 1 || true
+  if command -v lsof >/dev/null 2>&1; then
+    lsof -t -iTCP:3100 -sTCP:LISTEN 2>/dev/null | head -n 1 || true
+  else
+    echo ""
+  fi
 }
 
 log "Checking prerequisites"
@@ -56,7 +60,6 @@ require_cmd node
 require_cmd npm
 require_cmd npx
 require_cmd curl
-require_cmd lsof
 
 log "Preparing .env"
 if [[ ! -f .env ]]; then

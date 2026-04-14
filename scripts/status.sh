@@ -11,7 +11,11 @@ print_status() {
 }
 
 port_pid() {
-  lsof -t -iTCP:3100 -sTCP:LISTEN 2>/dev/null | head -n 1 || true
+  if command -v lsof >/dev/null 2>&1; then
+    lsof -t -iTCP:3100 -sTCP:LISTEN 2>/dev/null | head -n 1 || true
+  else
+    echo "unknown (lsof not installed)"
+  fi
 }
 
 print_status "root" "$ROOT_DIR"

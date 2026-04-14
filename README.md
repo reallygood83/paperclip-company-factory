@@ -4,6 +4,19 @@ Launch AI-native companies from natural language using Hermes + Paperclip.
 
 `paperclip-company-factory` is an open-source toolkit for bootstrapping, configuring, hosting, and operating reusable agent companies with public-safe templates and a Hermes-friendly natural-language workflow.
 
+## GitHub-URL-only agent install
+
+If a user gives Hermes or OpenClaw only this GitHub URL, the repo should still be installable:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/reallygood83/paperclip-company-factory/main/scripts/install_from_github_url.sh) https://github.com/reallygood83/paperclip-company-factory --dry-run
+```
+
+Then continue with:
+- `./scripts/status.sh`
+- `python3 scripts/first_run_wizard.py`
+- `PYTHONPATH=src python3 -m paperclip_company_factory.cli bootstrap-from-prompt "Create a public AI content studio company for newsletters" --dry-run --format text`
+
 ## 3-minute beginner path
 
 1. Clone this repository
@@ -17,6 +30,7 @@ Launch AI-native companies from natural language using Hermes + Paperclip.
 
 ## Beginner-friendly scripts
 
+- `scripts/install_from_github_url.sh`
 - `scripts/one_click_install.sh`
 - `scripts/enable_autostart.sh`
 - `scripts/status.sh`
@@ -50,9 +64,11 @@ A practical Hermes flow looks like this:
 
 ## Docs
 
+- `AGENTS.md`
 - `docs/architecture.md`
 - `docs/quickstart.md`
 - `docs/onboarding.md`
+- `docs/agent-install.md`
 - `docs/security.md`
 - `docs/troubleshooting.md`
 - `docs/launch-playbook.md`
